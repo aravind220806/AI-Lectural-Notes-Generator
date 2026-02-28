@@ -1,0 +1,1 @@
+# AI-Lectural-Notes-Generator
