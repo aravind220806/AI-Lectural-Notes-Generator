@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Lecture Notes Generator</title>
+    <!-- Use a modern font -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <!-- Include Markdown parser (marked.js) -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="background-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <main class="container">
+        <header>
+            <h1>Lecture<span class="gradient-text">Sync</span> AI</h1>
+            <p>Upload your lecture audio to instantly generate smart notes, flashcards, and quizzes automatically and view them on the web.</p>
+        </header>
+
+        <section class="upload-section">
+            <div id="drop-zone" class="drop-zone glassmorphism">
+                <div class="icon-container">
+                    <svg viewBox="0 0 24 24" fill="none" class="upload-icon" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 16L12 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M9 11L12 8 15 11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M8 8H6C4.89543 8 4 8.89543 4 10V18C4 19.1046 4.89543 20 6 20H18C19.1046 20 20 19.1046 20 18V10C20 8.89543 19.1046 8 18 8H16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <p id="drop-text">Drag & drop your audio file here or <span class="browse-link">browse</span></p>
+                <span class="supported-formats">MP3, WAV, M4A, OGG (Max 50MB)</span>
+                <input type="file" id="audio-input" accept="audio/*" hidden>
+            </div>
+            
+            <div id="file-info" class="file-info hidden glassmorphism">
+                <span id="file-name">filename.mp3</span>
+                <button id="remove-file" class="icon-btn">✕</button>
+            </div>
+
+            <button id="generate-btn" class="primary-btn glow-effect" disabled>✨ Generate Magic ✨</button>
+        </section>
+
+        <!-- Loading State -->
+        <section id="loading-state" class="state-container hidden">
+            <div class="loader">
+                <div class="ring"></div>
+                <div class="ring"></div>
+                <div class="ring"></div>
+            </div>
+            <p id="loading-text">Analyzing magic in your lecture audio... This might take a few minutes!</p>
+        </section>
+
+        <!-- Error State -->
+        <section id="error-state" class="state-container hidden glassmorphism error-box">
+            <h3 class="error-title">Oops!</h3>
+            <p id="error-message">Something went wrong.</p>
+            <button id="retry-btn" class="secondary-btn">Try Again</button>
+        </section>
+
+        <!-- Results Section -->
+        <section id="results-section" class="results-section hidden">
+            <nav class="tabs glassmorphism">
+                <button class="tab-btn active" data-target="notes">Study Notes</button>
+                <button class="tab-btn" data-target="flashcards">Flashcards</button>
+                <button class="tab-btn" data-target="quiz">Quiz</button>
+                <button class="tab-btn" data-target="transcript">Raw Transcript</button>
+            </nav>
+
+            <div class="tab-content-container glassmorphism">
+                <div id="notes" class="tab-content active markdown-body"></div>
+                <div id="flashcards" class="tab-content markdown-body"></div>
+                <div id="quiz" class="tab-content markdown-body"></div>
+                <div id="transcript" class="tab-content markdown-body"></div>
+            </div>
+        </section>
+    </main>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
